@@ -1,0 +1,6 @@
+---
+# vars file for test
+install_packages:
+  - cockpit
+  - virt-viewer
+  - apache2

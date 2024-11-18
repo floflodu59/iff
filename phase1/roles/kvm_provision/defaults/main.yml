@@ -1,0 +1,14 @@
+---
+# defaults file for kvm_provision
+base_image_name: jammy-server-cloudimg-amd64.img
+base_image_url: https://cloud-images.ubuntu.com/jammy/current/{{ base_image_name }}
+base_image_sha: 0ba0fd632a90d981625d842abf18453d5bf3fd7bb64e6dd61809794c6749e18b
+libvirt_pool_dir: "/var/lib/libvirt/images"
+vm_name: ubuntu2204-dev
+vm_vcpus: 2
+vm_ram_mb: 2048
+vm_net: default
+vm_root_pass: Azerty123+
+cleanup_tmp: no
+ssh_key: /root/.ssh/id_rsa.pub
+# defaults file for kvm_provision

@@ -1,0 +1,9 @@
+---
+# tasks file for test
+- name: Install required packages
+  package:
+    name: "{{ install_packages }}"
+    state: present
+  become: yes
+  tags:
+    - install_packages

@@ -30,5 +30,15 @@ netplan apply
 echo "INSTALLATION APPLICATIONS EN COURS..."
 apt-get update
 apt-get install ansible cockpit cockpit-pcp qemu qemu-kvm bridge-utils cpu-checker libvirt-clients libvirt-daemon postgresql cockpit-machines cloud-image-utils -y
-ssh-keygen -t rsa
-echo "CONFIGURATION TERMINEE"
+ssh-keygen -t rsa /home/isc/.ssh/id_rsa
+echo "CONFIGURATION HOTE TERMINEE"
+echo "======================"
+echo "Adresse IPv4 pour ISIL :"
+read guestip
+echo "Gateway IPv4 pour ISIL :"
+read guestgateway
+echo "Longueur Masque (1-32) pour ISIL :"
+read guestmask
+echo "Taille de la VM ISIL en Go :"
+read guestsize
+echo "CONFIGURATION RESEAU INVITE EN COURS..."/

@@ -33,7 +33,7 @@
     register: copy_results
 
   - name: Resize image
-    command: qemu-img resize {{ libvirt_pool_dir }}/{{ vm_name }}.qcow2 +64G
+    command: qemu-img resize {{ libvirt_pool_dir }}/{{ vm_name }}.qcow2 +{{ vm_size }}
 
 #  - name: Create OS Disk
 #    command: qemu-img create -f qcow2 {{ libvirt_pool_dir }}/{{ vm_name }}-temp.qcow2 64G
@@ -53,7 +53,7 @@
      --hostname {{ vm_name }} \
      --root-password password:{{ vm_root_pass }} \
      --ssh-inject 'root:file:{{ ssh_key }}' \
-     --firstboot /srv/deploiment/iff/phase1/setupnetwork.sh \
+     --firstboot /srv/iff/phase1/setupnetwork.sh \
      --network \
      --uninstall cloud-init --selinux-relabel
     when: copy_results is changed

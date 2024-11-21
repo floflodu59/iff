@@ -41,6 +41,10 @@ echo "Longueur Masque (1-32) pour ISIL :"
 read guestmask
 echo "Taille de la VM ISIL en Go :"
 read guestsize
+echo "Taille de la mémoire de la VM ISIL en Mo :"
+read guestram
+echo "Mot de passe root de la VM ISIL :"
+read guestpwd
 echo "CONFIGURATION RESEAU INVITE EN COURS..."/
 echo "# This is an automatically generated network config file by the IFF project." > /srv/iff/phase1/setupnetwork.sh
 echo "network:" >> /srv/iff/phase1/setupnetwork.sh
@@ -55,3 +59,18 @@ echo "    - 8.8.8.8" >> /srv/iff/phase1/setupnetwork.sh
 echo "    - 1.1.1.1" >> /srv/iff/phase1/setupnetwork.sh
 echo "    - $guestgateway" >> /srv/iff/phase1/setupnetwork.sh
 echo " version: 2" >> /srv/iff/phase1/setupnetwork.sh
+echo "---" > /srv/iff/phase1/roles/kvm_provision/defaults/main.yml
+echo "# defaults file for kvm_provision" >> /srv/iff/phase1/roles/kvm_provision/defaults/main.yml
+echo "base_image_name: jammy-server-cloudimg-amd64.img" >> /srv/iff/phase1/roles/kvm_provision/defaults/main.yml
+echo "base_image_url: https://cloud-images.ubuntu.com/jammy/current/{{ base_image_name }}" >> /srv/iff/phase1/roles/kvm_provision/defaults/main.yml
+echo "base_image_sha: 0ba0fd632a90d981625d842abf18453d5bf3fd7bb64e6dd61809794c6749e18b" >> /srv/iff/phase1/roles/kvm_provision/defaults/main.yml
+echo 'libvirt_pool_dir: "/var/lib/libvirt/images"' >> /srv/iff/phase1/roles/kvm_provision/defaults/main.yml
+echo "vm_name: ubuntu2204-dev" >> /srv/iff/phase1/roles/kvm_provision/defaults/main.yml
+echo "vm_vcpus: 2" >> /srv/iff/phase1/roles/kvm_provision/defaults/main.yml
+echo "vm_ram_mb: $guestram" >> /srv/iff/phase1/roles/kvm_provision/defaults/main.yml
+echo "vm_net: default" >> /srv/iff/phase1/roles/kvm_provision/defaults/main.yml
+echo "vm_size: $guestsize\G" >> /srv/iff/phase1/roles/kvm_provision/defaults/main.yml
+echo "vm_root_pass: $guestpwd" >> /srv/iff/phase1/roles/kvm_provision/defaults/main.yml
+echo "cleanup_tmp: no" >> /srv/iff/phase1/roles/kvm_provision/defaults/main.yml
+echo "ssh_key: /root/.ssh/id_rsa.pub" >> /srv/iff/phase1/roles/kvm_provision/defaults/main.yml
+echo "# defaults file for kvm_provision" >> /srv/iff/phase1/roles/kvm_provision/defaults/main.yml

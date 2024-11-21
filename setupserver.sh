@@ -49,7 +49,7 @@ echo "CONFIGURATION RESEAU INVITE EN COURS..."/
 echo "# This is an automatically generated network config file by the IFF project." > /srv/iff/phase1/setupnetwork.sh
 echo "network:" >> /srv/iff/phase1/setupnetwork.sh
 echo " ethernets:" >> /srv/iff/phase1/setupnetwork.sh
-echo "  eno1:" >> /srv/iff/phase1/setupnetwork.sh
+echo "  enp0s1:" >> /srv/iff/phase1/setupnetwork.sh
 echo "   dhcp4: no" >> /srv/iff/phase1/setupnetwork.sh
 echo "   addresses: [$guestip/$guestmask]" >> /srv/iff/phase1/setupnetwork.sh
 echo "   gateway4: $guestgateway" >> /srv/iff/phase1/setupnetwork.sh

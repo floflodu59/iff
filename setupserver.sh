@@ -42,3 +42,16 @@ read guestmask
 echo "Taille de la VM ISIL en Go :"
 read guestsize
 echo "CONFIGURATION RESEAU INVITE EN COURS..."/
+echo "# This is an automatically generated network config file by the IFF project." > /srv/iff/phase1/setupnetwork.sh
+echo "network:" >> /srv/iff/phase1/setupnetwork.sh
+echo " ethernets:" >> /srv/iff/phase1/setupnetwork.sh
+echo "  eno1:" >> /srv/iff/phase1/setupnetwork.sh
+echo "   dhcp4: no" >> /srv/iff/phase1/setupnetwork.sh
+echo "   addresses: [$guestip/$guestmask]" >> /srv/iff/phase1/setupnetwork.sh
+echo "   gateway4: $guestgateway" >> /srv/iff/phase1/setupnetwork.sh
+echo "   nameservers:" >> /srv/iff/phase1/setupnetwork.sh
+echo "    addresses:" >> /srv/iff/phase1/setupnetwork.sh
+echo "    - 8.8.8.8" >> /srv/iff/phase1/setupnetwork.sh
+echo "    - 1.1.1.1" >> /srv/iff/phase1/setupnetwork.sh
+echo "    - $guestgateway" >> /srv/iff/phase1/setupnetwork.sh
+echo " version: 2" >> /srv/iff/phase1/setupnetwork.sh

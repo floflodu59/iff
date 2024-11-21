@@ -52,7 +52,7 @@ echo 'echo "network:" >> /etc/netplan/00-installer-config.yaml' >> /srv/iff/phas
 echo 'echo " ethernets:" >> /etc/netplan/00-installer-config.yaml' >> /srv/iff/phase1/setupnetwork.sh
 echo 'echo "  enp1s0:" >> /etc/netplan/00-installer-config.yaml' >> /srv/iff/phase1/setupnetwork.sh
 echo 'echo "   dhcp4: no" >> /etc/netplan/00-installer-config.yaml' >> /srv/iff/phase1/setupnetwork.sh
-echo 'echo "   addresses:['$guestip'/'$guestmask']" >> /etc/netplan/00-installer-config.yaml' >> /srv/iff/phase1/setupnetwork.sh
+echo 'echo "   addresses: ['$guestip'/'$guestmask']" >> /etc/netplan/00-installer-config.yaml' >> /srv/iff/phase1/setupnetwork.sh
 echo 'echo "   gateway4: '$guestgateway'" >> /etc/netplan/00-installer-config.yaml' >> /srv/iff/phase1/setupnetwork.sh
 echo 'echo "   nameservers:" >> /etc/netplan/00-installer-config.yaml' >> /srv/iff/phase1/setupnetwork.sh
 echo 'echo "    addresses:" >> /etc/netplan/00-installer-config.yaml' >> /srv/iff/phase1/setupnetwork.sh

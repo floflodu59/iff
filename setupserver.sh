@@ -46,23 +46,23 @@ read guestram
 echo "Mot de passe root de la VM ISIL :"
 read guestpwd
 echo "CONFIGURATION RESEAU INVITE EN COURS..."/
-echo'echo "CONFIGURATION RESEAU EN COURS..."' > /srv/iff/phase1/setupnetwork.sh
-echo'echo "# This is an automatically generated network config file by the IFF project." > /etc/netplan/00-installer-config.yaml' >> /srv/iff/phase1/setupnetwork.sh
-echo'echo "network:" >> /etc/netplan/00-installer-config.yaml' >> /srv/iff/phase1/setupnetwork.sh
-echo'echo " ethernets:" >> /etc/netplan/00-installer-config.yaml' >> /srv/iff/phase1/setupnetwork.sh
-echo'echo "  enp1s0:" >> /etc/netplan/00-installer-config.yaml' >> /srv/iff/phase1/setupnetwork.sh
-echo'echo "   dhcp4: no" >> /etc/netplan/00-installer-config.yaml' >> /srv/iff/phase1/setupnetwork.sh
-echo'echo "   addresses:['$guestip'/'$guestmask']" >> /etc/netplan/00-installer-config.yaml' >> /srv/iff/phase1/setupnetwork.sh
-echo'echo "   gateway4: '$guestgateway'" >> /etc/netplan/00-installer-config.yaml' >> /srv/iff/phase1/setupnetwork.sh
-echo'echo "   nameservers:" >> /etc/netplan/00-installer-config.yaml' >> /srv/iff/phase1/setupnetwork.sh
-echo'echo "    addresses:" >> /etc/netplan/00-installer-config.yaml' >> /srv/iff/phase1/setupnetwork.sh
-echo'echo "    - 8.8.8.8" >> /etc/netplan/00-installer-config.yaml' >> /srv/iff/phase1/setupnetwork.sh
-echo'echo "    - 1.1.1.1" >> /etc/netplan/00-installer-config.yaml' >> /srv/iff/phase1/setupnetwork.sh
-echo'echo "    - '$guestgateway'" >> /etc/netplan/00-installer-config.yaml' >> /srv/iff/phase1/setupnetwork.sh
-echo'echo " version: 2" >> /etc/netplan/00-installer-config.yaml' >> /srv/iff/phase1/setupnetwork.sh
-echo'netplan apply' >> /srv/iff/phase1/setupnetwork.sh
-echo'ssh-keygen -A' >> /srv/iff/phase1/setupnetwork.sh
-echo'sytemctl restart ssh' >> /srv/iff/phase1/setupnetwork.sh
+echo 'echo "CONFIGURATION RESEAU EN COURS..."' > /srv/iff/phase1/setupnetwork.sh
+echo 'echo "# This is an automatically generated network config file by the IFF project." > /etc/netplan/00-installer-config.yaml' >> /srv/iff/phase1/setupnetwork.sh
+echo 'echo "network:" >> /etc/netplan/00-installer-config.yaml' >> /srv/iff/phase1/setupnetwork.sh
+echo 'echo " ethernets:" >> /etc/netplan/00-installer-config.yaml' >> /srv/iff/phase1/setupnetwork.sh
+echo 'echo "  enp1s0:" >> /etc/netplan/00-installer-config.yaml' >> /srv/iff/phase1/setupnetwork.sh
+echo 'echo "   dhcp4: no" >> /etc/netplan/00-installer-config.yaml' >> /srv/iff/phase1/setupnetwork.sh
+echo 'echo "   addresses:['$guestip'/'$guestmask']" >> /etc/netplan/00-installer-config.yaml' >> /srv/iff/phase1/setupnetwork.sh
+echo 'echo "   gateway4: '$guestgateway'" >> /etc/netplan/00-installer-config.yaml' >> /srv/iff/phase1/setupnetwork.sh
+echo 'echo "   nameservers:" >> /etc/netplan/00-installer-config.yaml' >> /srv/iff/phase1/setupnetwork.sh
+echo 'echo "    addresses:" >> /etc/netplan/00-installer-config.yaml' >> /srv/iff/phase1/setupnetwork.sh
+echo 'echo "    - 8.8.8.8" >> /etc/netplan/00-installer-config.yaml' >> /srv/iff/phase1/setupnetwork.sh
+echo 'echo "    - 1.1.1.1" >> /etc/netplan/00-installer-config.yaml' >> /srv/iff/phase1/setupnetwork.sh
+echo 'echo "    - '$guestgateway'" >> /etc/netplan/00-installer-config.yaml' >> /srv/iff/phase1/setupnetwork.sh
+echo 'echo " version: 2" >> /etc/netplan/00-installer-config.yaml' >> /srv/iff/phase1/setupnetwork.sh
+echo 'netplan apply' >> /srv/iff/phase1/setupnetwork.sh
+echo 'ssh-keygen -A' >> /srv/iff/phase1/setupnetwork.sh
+echo 'sytemctl restart ssh' >> /srv/iff/phase1/setupnetwork.sh
 echo "---" > /srv/iff/phase1/roles/kvm_provision/defaults/main.yml
 echo "# defaults file for kvm_provision" >> /srv/iff/phase1/roles/kvm_provision/defaults/main.yml
 echo "base_image_name: jammy-server-cloudimg-amd64.img" >> /srv/iff/phase1/roles/kvm_provision/defaults/main.yml

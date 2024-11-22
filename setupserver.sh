@@ -30,6 +30,8 @@ netplan apply
 echo "INSTALLATION APPLICATIONS EN COURS..."
 apt-get update
 apt-get install ansible cockpit cockpit-pcp qemu qemu-kvm bridge-utils cpu-checker libvirt-clients libvirt-daemon postgresql cockpit-machines cloud-image-utils -y
+echo "======================"
+echo "GENERATION DE LA CLE SSH"
 ssh-keygen -t rsa -f /home/isc/.ssh/id_rsa
 echo "CONFIGURATION HOTE TERMINEE"
 echo "======================"
@@ -69,7 +71,7 @@ echo "base_image_name: jammy-server-cloudimg-amd64.img" >> /srv/iff/phase1/roles
 echo "base_image_url: https://cloud-images.ubuntu.com/jammy/current/{{ base_image_name }}" >> /srv/iff/phase1/roles/kvm_provision/defaults/main.yml
 echo "base_image_sha: 0ba0fd632a90d981625d842abf18453d5bf3fd7bb64e6dd61809794c6749e18b" >> /srv/iff/phase1/roles/kvm_provision/defaults/main.yml
 echo 'libvirt_pool_dir: "/var/lib/libvirt/images"' >> /srv/iff/phase1/roles/kvm_provision/defaults/main.yml
-echo "vm_name: ubuntu2204-dev" >> /srv/iff/phase1/roles/kvm_provision/defaults/main.yml
+echo "vm_name: VMISIL" >> /srv/iff/phase1/roles/kvm_provision/defaults/main.yml
 echo "vm_vcpus: 2" >> /srv/iff/phase1/roles/kvm_provision/defaults/main.yml
 echo "vm_ram_mb: $guestram" >> /srv/iff/phase1/roles/kvm_provision/defaults/main.yml
 echo "vm_net: default" >> /srv/iff/phase1/roles/kvm_provision/defaults/main.yml

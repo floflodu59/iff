@@ -62,7 +62,7 @@ echo 'echo "    - '$guestgateway'" >> /etc/netplan/00-installer-config.yaml' >> 
 echo 'echo " version: 2" >> /etc/netplan/00-installer-config.yaml' >> /srv/iff/phase1/setupnetwork.sh
 echo 'netplan apply' >> /srv/iff/phase1/setupnetwork.sh
 echo 'ssh-keygen -A' >> /srv/iff/phase1/setupnetwork.sh
-echo 'sytemctl restart ssh' >> /srv/iff/phase1/setupnetwork.sh
+echo 'shutdown -r' >> /srv/iff/phase1/setupnetwork.sh
 echo "---" > /srv/iff/phase1/roles/kvm_provision/defaults/main.yml
 echo "# defaults file for kvm_provision" >> /srv/iff/phase1/roles/kvm_provision/defaults/main.yml
 echo "base_image_name: jammy-server-cloudimg-amd64.img" >> /srv/iff/phase1/roles/kvm_provision/defaults/main.yml
@@ -73,7 +73,7 @@ echo "vm_name: ubuntu2204-dev" >> /srv/iff/phase1/roles/kvm_provision/defaults/m
 echo "vm_vcpus: 2" >> /srv/iff/phase1/roles/kvm_provision/defaults/main.yml
 echo "vm_ram_mb: $guestram" >> /srv/iff/phase1/roles/kvm_provision/defaults/main.yml
 echo "vm_net: default" >> /srv/iff/phase1/roles/kvm_provision/defaults/main.yml
-echo "vm_size: $guestsize\G" >> /srv/iff/phase1/roles/kvm_provision/defaults/main.yml
+echo "vm_size: "$guestsize"G" >> /srv/iff/phase1/roles/kvm_provision/defaults/main.yml
 echo "vm_root_pass: $guestpwd" >> /srv/iff/phase1/roles/kvm_provision/defaults/main.yml
 echo "cleanup_tmp: no" >> /srv/iff/phase1/roles/kvm_provision/defaults/main.yml
 echo "ssh_key: /root/.ssh/id_rsa.pub" >> /srv/iff/phase1/roles/kvm_provision/defaults/main.yml

@@ -80,3 +80,10 @@ echo "vm_root_pass: $guestpwd" >> /srv/iff/phase1/roles/kvm_provision/defaults/m
 echo "cleanup_tmp: no" >> /srv/iff/phase1/roles/kvm_provision/defaults/main.yml
 echo "ssh_key: /root/.ssh/id_rsa.pub" >> /srv/iff/phase1/roles/kvm_provision/defaults/main.yml
 echo "# defaults file for kvm_provision" >> /srv/iff/phase1/roles/kvm_provision/defaults/main.yml
+echo "[myhosts]" > /srv/iff/phase2/inventory.ini
+echo "$guestip" >> /srv/iff/phase2/inventory.ini
+echo "[all:vars]" >> /srv/iff/phase2/inventory.ini
+echo "ansible_user=root" >> /srv/iff/phase2/inventory.ini
+echo "ansible_pass=$guestpwd" >> /srv/iff/phase2/inventory.ini
+echo "ansible_ssh_private_key_file =/home/isc/.ssh/id_rsa" >> /srv/iff/phase2/inventory.ini
+echo 'ansible_ssh_common_args="-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"' >> /srv/iff/phase2/inventory.ini

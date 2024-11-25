@@ -64,6 +64,8 @@ echo 'echo "    - '$guestgateway'" >> /etc/netplan/00-installer-config.yaml' >> 
 echo 'echo " version: 2" >> /etc/netplan/00-installer-config.yaml' >> /srv/iff/phase1/setupnetwork.sh
 echo 'netplan apply' >> /srv/iff/phase1/setupnetwork.sh
 echo 'ssh-keygen -A' >> /srv/iff/phase1/setupnetwork.sh
+echo 'rm /etc/ssh/sshd_config.d/60-cloudimg-settings.conf' >> /srv/iff/phase1/setupnetwork.sh
+echo 'adduser isil' >> /srv/iff/phase1/setupnetwork.sh
 echo 'shutdown -r' >> /srv/iff/phase1/setupnetwork.sh
 echo "---" > /srv/iff/phase1/roles/kvm_provision/defaults/main.yml
 echo "# defaults file for kvm_provision" >> /srv/iff/phase1/roles/kvm_provision/defaults/main.yml
@@ -87,3 +89,10 @@ echo "ansible_user=root" >> /srv/iff/phase2/inventory.ini
 echo "ansible_pass=$guestpwd" >> /srv/iff/phase2/inventory.ini
 echo "ansible_ssh_private_key_file =/home/isc/.ssh/id_rsa" >> /srv/iff/phase2/inventory.ini
 echo 'ansible_ssh_common_args="-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"' >> /srv/iff/phase2/inventory.ini
+echo "======================"
+echo "EXECUTION PHASE 1"
+ansible-playbook /srv/iff/phase1/kvm_provision.yml
+echo "CONFIGURATION & REDEMARRAGE MACHINE VIRTUELLE"
+sleep 240
+echo "EXECUTION PHASE 2"
+ansible-playbook /srv/iff/phase2/test.yml

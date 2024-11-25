@@ -91,8 +91,8 @@ echo "ansible_ssh_private_key_file =/home/isc/.ssh/id_rsa" >> /srv/iff/phase2/in
 echo 'ansible_ssh_common_args="-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"' >> /srv/iff/phase2/inventory.ini
 echo "======================"
 echo "EXECUTION PHASE 1"
-ansible-playbook /srv/iff/phase1/kvm_provision.yml
+ansible-playbook /srv/iff/phase1/kvm_provision.yaml
 echo "CONFIGURATION & REDEMARRAGE MACHINE VIRTUELLE"
 sleep 240
 echo "EXECUTION PHASE 2"
-ansible-playbook /srv/iff/phase2/test.yml
+ansible-playbook /srv/iff/phase2/test.yaml

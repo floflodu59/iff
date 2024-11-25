@@ -93,6 +93,6 @@ echo "======================"
 echo "EXECUTION PHASE 1"
 ansible-playbook /srv/iff/phase1/kvm_provision.yaml
 echo "CONFIGURATION & REDEMARRAGE MACHINE VIRTUELLE"
-sleep 240
+sleep 120
 echo "EXECUTION PHASE 2"
 ansible-playbook /srv/iff/phase2/test.yaml -i /srv/iff/phase2/inventory.ini

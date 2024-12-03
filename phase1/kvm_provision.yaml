@@ -4,7 +4,7 @@
   become: yes
   vars:
     pool_dir: "/var/lib/libvirt/images"
-    vm: ubuntu2204-test01
+    vm: "{{ vm_name }}"
     vcpus: 2
     ram_mb: 2048
     cleanup: no

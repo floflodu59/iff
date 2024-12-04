@@ -4,7 +4,7 @@
   become: yes
   vars:
     pool_dir: "/var/lib/libvirt/images"
-    vm: "{{ vm_name }}"
+    vm: "VMISIL"
     vcpus: 2
     ram_mb: 2048
     cleanup: no

@@ -21,7 +21,7 @@
     get_url:
      url: "{{ base_image_url }}"
      dest: "/tmp/{{ base_image_name }}"
-     checksum: "sha256:{{ base_image_sha }}"
+#     checksum: "sha256:{{ base_image_sha }}"
 
   - name: Copy base image to libvirt directory
     copy:

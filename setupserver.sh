@@ -107,4 +107,4 @@ sed -i 's/local   all             postgres                                peer/l
 systemctl restart postgresql
 psql -U postgres -c "Alter USER postgres WITH PASSWORD '$dbpassword';"
 psql -U postgres -c "create database isil;"
-sed -i 's/local   all             postgres                                trust/local   all             postgres                                md5/g' /etc/postgresql/14/main/pg_hba.conf#
+sed -i 's/local   all             postgres                                trust/local   all             postgres                                md5/g' /etc/postgresql/14/main/pg_hba.conf

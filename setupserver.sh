@@ -49,7 +49,7 @@ echo "Taille de la mémoire de la VM ISIL en Mo :"
 read guestram
 echo "Mot de passe root de la VM ISIL :"
 read guestpwd
-echo "CONFIGURATION RESEAU INVITE EN COURS..."/
+echo "CONFIGURATION RESEAU INVITE EN COURS..."
 echo 'echo "CONFIGURATION RESEAU EN COURS..."' > /srv/iff/phase1/setupnetwork.sh
 echo 'echo "# This is an automatically generated network config file by the IFF project." > /etc/netplan/00-installer-config.yaml' >> /srv/iff/phase1/setupnetwork.sh
 echo 'echo "network:" >> /etc/netplan/00-installer-config.yaml' >> /srv/iff/phase1/setupnetwork.sh
@@ -98,3 +98,13 @@ echo "CONFIGURATION & REDEMARRAGE MACHINE VIRTUELLE"
 sleep 120
 echo "EXECUTION PHASE 2"
 ansible-playbook /srv/iff/phase2/test.yaml -i /srv/iff/phase2/inventory.ini
+echo "======================"
+echo "Mot de passe pour la base de donnée :"
+read dbpassword
+echo "CONFIGURATION DE LA BASE DE DONNEES"
+systemctl enable postgresql && systemctl start postgresql
+sed -i 's/local   all             postgres                                peer/local   all             postgres                                trust/g' /etc/postgresql/14/main/pg_hba.conf
+systemctl restart postgresql
+psql -U postgres -c "Alter USER postgres WITH PASSWORD '$dbpassword';"
+psql -U postgres -c "create database isil;"
+sed -i 's/local   all             postgres                                trust/local   all             postgres                                md5/g' /etc/postgresql/14/main/pg_hba.conf#

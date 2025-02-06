@@ -2,6 +2,8 @@
 # IFF - Script de configuration hôte
 echo "CONFIGURATION HOTE IFF"
 echo "======================"
+echo "Nom de l'interface ethernet utilisée :"
+read interface
 echo "Adresse IPv4 serveur :"
 read ipaddress
 echo "Gateway IPv4 :"
@@ -12,11 +14,11 @@ echo "CONFIGURATION RESEAU EN COURS..."
 echo "# This is an automatically generated network config file by the IFF project." > /etc/netplan/00-installer-config.yaml
 echo "network:" >> /etc/netplan/00-installer-config.yaml
 echo " ethernets:" >> /etc/netplan/00-installer-config.yaml
-echo "  eno1:" >> /etc/netplan/00-installer-config.yaml
+echo "  $interface:" >> /etc/netplan/00-installer-config.yaml
 echo "   dhcp4: no" >> /etc/netplan/00-installer-config.yaml
 echo " bridges:" >> /etc/netplan/00-installer-config.yaml
 echo "  br0:" >> /etc/netplan/00-installer-config.yaml
-echo "   interfaces: [eno1]" >> /etc/netplan/00-installer-config.yaml
+echo "   interfaces: [$interface]" >> /etc/netplan/00-installer-config.yaml
 echo "   addresses: [$ipaddress/$masklength]" >> /etc/netplan/00-installer-config.yaml
 echo "   gateway4: $gatewayaddress" >> /etc/netplan/00-installer-config.yaml
 echo "   nameservers:" >> /etc/netplan/00-installer-config.yaml

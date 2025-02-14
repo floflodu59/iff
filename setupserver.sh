@@ -51,6 +51,7 @@ read guestram
 echo "Mot de passe root de la VM ISIL :"
 read guestpwd
 echo "CONFIGURATION RESEAU INVITE EN COURS..."
+sed -i 's/ram_mb: 2048/ram_mb: '$guestram'/g' /srv/iff/phase1/kvm_provision.yaml
 echo 'echo "CONFIGURATION RESEAU EN COURS..."' > /srv/iff/phase1/setupnetwork.sh
 echo 'echo "# This is an automatically generated network config file by the IFF project." > /etc/netplan/00-installer-config.yaml' >> /srv/iff/phase1/setupnetwork.sh
 echo 'echo "network:" >> /etc/netplan/00-installer-config.yaml' >> /srv/iff/phase1/setupnetwork.sh

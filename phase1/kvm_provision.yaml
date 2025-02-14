@@ -5,8 +5,8 @@
   vars:
     pool_dir: "/var/lib/libvirt/images"
     vm: "VMISIL"
-    vcpus: 2
-    ram_mb: 2048
+#    vcpus: 2
+#    ram_mb: 2048
     cleanup: no
     net: default
     ssh_pub_key: "/home/isc/.ssh/id_rsa.pub"

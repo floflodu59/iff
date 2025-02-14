@@ -11,6 +11,7 @@ read gatewayaddress
 echo "Longueur Masque (1-32) :"
 read masklength
 echo "CONFIGURATION RESEAU EN COURS..."
+rm -rf /etc/netplan/*
 echo "# This is an automatically generated network config file by the IFF project." > /etc/netplan/00-installer-config.yaml
 echo "network:" >> /etc/netplan/00-installer-config.yaml
 echo " ethernets:" >> /etc/netplan/00-installer-config.yaml

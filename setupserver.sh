@@ -99,7 +99,7 @@ ansible-playbook /srv/iff/phase1/kvm_provision.yaml
 echo "CONFIGURATION & REDEMARRAGE MACHINE VIRTUELLE"
 sleep 120
 echo "EXECUTION PHASE 2"
-ansible-playbook /srv/iff/phase2/test.yaml -i /srv/iff/phase2/inventory.ini
+ansible-playbook /srv/iff/phase2/setupisil.yaml -i /srv/iff/phase2/inventory.ini
 echo "======================"
 echo "Mot de passe pour la base de donnée :"
 read dbpassword

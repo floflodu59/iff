@@ -113,3 +113,5 @@ sed -i 's/local   all             postgres                                trust/
 echo "CONFIGURATION DE LA SAUVEGARDE"
 mkdir /backup
 cp -r /srv/iff/backup/* /backup/
+chmod u+x /backup/scripts/export.sh
+chmod u+x /backup/scripts/errorhandler.sh

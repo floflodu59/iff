@@ -112,3 +112,4 @@ psql -U postgres -c "create database isil;"
 sed -i 's/local   all             postgres                                trust/local   all             postgres                                md5/g' /etc/postgresql/14/main/pg_hba.conf
 echo "CONFIGURATION DE LA SAUVEGARDE"
 mkdir /backup
+cp -r /srv/iff/backup/* /backup/

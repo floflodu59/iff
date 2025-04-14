@@ -137,7 +137,7 @@ function errorhandler
   		status=2
   	fi
    	if [ $executionmode -eq 2 ] ; then
-   		if [ $vm -eq 0 ] ; then
+   		if [ $vmcheck -eq 0 ] ; then
 			echo "${current_date} - ERREUR - Erreur de sauvegarde des machines virtuelles" >> /backup/history.log
    			status=2
   		fi

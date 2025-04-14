@@ -22,6 +22,9 @@ current_month=$(date +"%m")
 current_day=$(date +"%d")
 #====ERROR HANDLER VARIABLE====
 status=0
+dbcheck=false
+vmcheck=false
+uploadcheck=false
 stamp=$(date +"%Y%m%d")
 #====MAILING====
 sender="" #Expediteur du mail
@@ -33,6 +36,13 @@ sqluser="isc" #Changer ici utilisateur SQL
 vmarrayfile="/backup/scripts/vmlist"
 vmlist=$(cat $vmarrayfile)
 
+
+#Codes d'etat :
+# 0 - La fonction de sauvegarde au sein du script de s'est pas effectué
+# 1 - Sauvegarde complétée sans problèmes
+#Types d'execution :
+#1 - Sauvegarde partielle bases de données
+#2 - Sauvegarde complete
 
 echo "${stamp}${status}" > /backup/scripts/status
 echo "${current_date} - Démarrage de la sauvegarde." >> /backup/history.log
@@ -49,7 +59,7 @@ function savedb
 	cp /backup/data/sqllatest.sql.gpg /backup/data/sql/$current_year/$current_month/$current_day/export-$current_date.sql.gpg
 	echo "${current_date} - Sauvegarde de la BDD effectuée." >> /backup/history.log
 	echo "${current_date} - Votre sauvegarde de la BDD est disponible au chemin suivant : /backup/data/sql${current_year}/${current_month}/${current_day}/export-${current_date}.sql.gpg" >> /backup/history.log
-	status=1
+ 	dbcheck=true
 	echo "${stamp}${status}" > /backup/scripts/status
 }
 
@@ -69,6 +79,7 @@ function fullsave
 	rm /backup/temp/uploads.tar.gz
 	echo "${current_date} - Sauvegarde des uploads effectuée." >> /backup/history.log
 	echo "${current_date} - Votre sauvegarde des uploads est disponible au chemin suivant : /backup/data/${current_year}/${current_month}/${current_day}/uploads-full-${current_date}.sql.gpg" >> /backup/history.log
+	uploadcheck=true
 }
 
 function saveuploads
@@ -87,7 +98,8 @@ function saveuploads
 		rm /backup/temp/uploads-incremental.tar.gz
 		echo "${current_date} - Sauvegarde des uploads effectuée." >> /backup/history.log
 		echo "${current_date} - Votre sauvegarde des uploads est disponible au chemin suivant : /backup/data/${current_year}/${current_month}/${current_day}/uploads-incremental-${current_date}.sql.gpg" >> /backup/history.log
-	fi
+		uploadcheck=true
+ 	fi
 	if [ $executionmode -eq 2 ] ; then 
 		fullsave
 	fi
@@ -96,25 +108,59 @@ function saveuploads
 function errorhandler
 {
 	#echo "${status}"
+	
+ 	if [ $executionmode -eq 1 ] ; then
+  		if [ $dbcheck -eq 1 ] ; then
+			if [ $uploadcheck -eq 1 ] ; then
+			status=1
+  			fi
+  		fi
+  	fi
+   	if [ $executionmode -eq 2 ] ; then
+  		if [ $dbcheck -eq 1 ] ; then
+			if [ $uploadcheck -eq 1 ] ; then
+				if [ $vmcheck -eq 1 ] ; then
+				status=1
+  				fi
+  			fi
+  		fi
+  	fi
 	if [ $status -eq 0 ] ; then
-		echo "${current_date} - ERREUR DE SAUVEGARDE" >> /backup/history.log
+		echo "${current_date} - ERREUR DE SAUVEGARDE GENERALE" >> /backup/history.log
 	fi
+ 	if [ $dbcheck -eq 0 ] ; then
+		echo "${current_date} - ERREUR - Erreur de sauvegarde de la base de donnees" >> /backup/history.log
+  		status=2
+  	fi
+   	if [ $uploadcheck -eq 0 ] ; then
+		echo "${current_date} - ERREUR - Erreur de sauvegarde du dossier uploads" >> /backup/history.log
+  		status=2
+  	fi
+   	if [ $executionmode -eq 2 ] ; then
+   		if [ $vm -eq 0 ] ; then
+			echo "${current_date} - ERREUR - Erreur de sauvegarde des machines virtuelles" >> /backup/history.log
+   			status=2
+  		fi
+    	fi
+     	status > /backup/scripts/status
 }
 
 function savevms
 {
-	for i in "${vmlist[@]}"
-	do
-		echo "$i"
-		virsh snapshot-delete $i latest
-		virsh snapshot-create-as $i latest
-		mkdir /backup/data/vm/$i
-		cp /var/lib/libvirt/images/$i.qcow2 /backup/data/vm/$i/latest.qcow2
-		echo $(cat "$password2")| gpg --batch --yes --passphrase-fd 0 -c /backup/data/vm/$i/latest.qcow2
-		rm /backup/data/vm/$i/latest.qcow2
-		virsh dumpxml $i >> /backup/data/vm/$i/latestconfig.xml
-		# or do whatever with individual element of the array
-	done
+	if [ $executionmode -eq 2 ] ; then
+		for i in "${vmlist[@]}"
+		do
+			echo "$i"
+			virsh snapshot-delete $i latest
+			virsh snapshot-create-as $i latest
+			mkdir /backup/data/vm/$i
+			cp /var/lib/libvirt/images/$i.qcow2 /backup/data/vm/$i/latest.qcow2
+			echo $(cat "$password2")| gpg --batch --yes --passphrase-fd 0 -c /backup/data/vm/$i/latest.qcow2
+			rm /backup/data/vm/$i/latest.qcow2
+			virsh dumpxml $i >> /backup/data/vm/$i/latestconfig.xml
+		done
+  	fi
+ 	vmcheck=true
 }
 
 savedb

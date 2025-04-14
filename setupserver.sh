@@ -32,7 +32,7 @@ echo " version: 2" >> /etc/netplan/00-installer-config.yaml
 netplan apply
 echo "INSTALLATION APPLICATIONS EN COURS..."
 apt-get update
-apt-get install ansible cockpit cockpit-pcp qemu qemu-kvm bridge-utils cpu-checker libvirt-clients libvirt-daemon postgresql cockpit-machines cloud-image-utils -y
+apt-get install ansible cockpit cockpit-pcp qemu qemu-kvm bridge-utils cpu-checker libvirt-clients libvirt-daemon postgresql cockpit-machines cloud-image-utils ssmtp -y
 echo "======================"
 echo "GENERATION DE LA CLE SSH"
 ssh-keygen -t rsa -f /home/isc/.ssh/id_rsa

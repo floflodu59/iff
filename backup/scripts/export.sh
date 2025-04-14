@@ -117,32 +117,7 @@ function savevms
 	done
 }
 
-function sendmail
-{
-
-	echo "To: ${recipients}" >> /backup/scripts/sendmail
-	echo "From: ${sender}" >> /backup/scripts/sendmail
-        if [ $status -eq 0 ] ; then
-		echo "Subject: [${sujet}][${site}] ECHEC - La sauvegarde des donnees ISIL ne s'est pas effectuee." >> /backup/scripts/sendmail #Changer ici au besoin
-		echo "Bonjour," >> /backup/scripts/sendmail
-		echo "La sauvegarde du serveur ISIL du site ${site} n'a pas aboutie." >> /backup/scripts/sendmail #Changer ici au besoin
-		echo "Bonne journee," >> /backup/scripts/sendmail
-		echo "SFF 1.0 - " >> /backup/scripts/sendmail
-        fi
-        if [ $status -eq 1 ] ; then
-		echo "Subject: [${sujet}][${site}] SUCCES - La sauvegarde des donnees ISIL s'est effectuee." >> /backup/scripts/sendmail #Changer ici au besoin
-		echo "Bonjour," >> /backup/scripts/sendmail
-		echo "La sauvegarde du serveur ISIL du site ${site} s'est effectuee correctement." >> /backup/scripts/sendmail #Changer ici au besoin
-		echo "Bonne journee," >> /backup/scripts/sendmail
-                echo "SFF 1.0" >> /backup/scripts/sendmail
-        fi
-	/usr/sbin/ssmtp $sender < /backup/scripts/sendmail
-	rm /backup/scripts/sendmail
-	echo "${current_date} - Envoi du mail effectué." >> /backup/history.log
-}
-
 savedb
 saveuploads
 savevms
 errorhandler
-#sendmail

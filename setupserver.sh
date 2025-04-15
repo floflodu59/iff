@@ -115,10 +115,10 @@ mkdir /backup
 cp -r /srv/iff/backup/* /backup/
 chmod u+x /backup/scripts/export.sh
 chmod u+x /backup/scripts/errorhandler.sh
-dbpassword > /backup/scripts/.psswd
+echo dbpassword > /backup/scripts/.psswd
 echo "Mot de passe pour le chiffrement de la sauvegarde :"
 read bckpsswd
-bckpsswd > /backup/scripts/.psswd2
+echo bckpsswd > /backup/scripts/.psswd2
 chown root:root /backup/scripts/.psswd
 chown root:root /backup/scripts/.psswd2
 chmod 700 /backup/scripts/.psswd

@@ -20,6 +20,7 @@ current_year=$(date +"%Y")
 last_year=$(date --date="1 year ago" +"%Y")
 current_month=$(date +"%m")
 current_day=$(date +"%d")
+stamp=$(date +"%Y%m%d")
 #====ERROR HANDLER VARIABLE====
 status=0
 dbcheck=false
@@ -32,7 +33,7 @@ recipients=""
 site="" #Apparait dans le sujet du mail : "[SUJET][SITE] Info"
 sujet="" #Apparait dans le sujet du mail : "[SUJET][SITE] Info"
 #====OTHER====
-sqluser="isc" #Changer ici utilisateur SQL
+sqluser="postgres" #Changer ici utilisateur SQL
 vmarrayfile="/backup/scripts/vmlist"
 vmlist=$(cat $vmarrayfile)
 
@@ -107,42 +108,44 @@ function saveuploads
 
 function errorhandler
 {
+
 	#echo "${status}"
-	
  	if [ $executionmode -eq 1 ] ; then
-  		if [ $dbcheck -eq 1 ] ; then
-			if [ $uploadcheck -eq 1 ] ; then
+  		if [ $dbcheck = true ] ; then
+			if [ $uploadcheck = true ] ; then
 			status=1
   			fi
   		fi
   	fi
    	if [ $executionmode -eq 2 ] ; then
-  		if [ $dbcheck -eq 1 ] ; then
-			if [ $uploadcheck -eq 1 ] ; then
-				if [ $vmcheck -eq 1 ] ; then
+  		if [ $dbcheck = true ] ; then
+			if [ $uploadcheck = true ] ; then
+				if [ $vmcheck = true ] ; then
 				status=1
   				fi
   			fi
   		fi
   	fi
-	if [ $status -eq 0 ] ; then
+	if [ $status = false ] ; then
 		echo "${current_date} - ERREUR DE SAUVEGARDE GENERALE" >> /backup/history.log
 	fi
- 	if [ $dbcheck -eq 0 ] ; then
+ 	if [ $dbcheck = false ] ; then
 		echo "${current_date} - ERREUR - Erreur de sauvegarde de la base de donnees" >> /backup/history.log
   		status=2
   	fi
-   	if [ $uploadcheck -eq 0 ] ; then
+   	if [ $uploadcheck = false ] ; then
 		echo "${current_date} - ERREUR - Erreur de sauvegarde du dossier uploads" >> /backup/history.log
   		status=2
   	fi
    	if [ $executionmode -eq 2 ] ; then
-   		if [ $vmcheck -eq 0 ] ; then
+   		if [ $vmcheck = false ] ; then
 			echo "${current_date} - ERREUR - Erreur de sauvegarde des machines virtuelles" >> /backup/history.log
    			status=2
   		fi
     	fi
-     	status > /backup/scripts/status
+	status="${stamp}""${status}"
+	echo $status
+     	echo $status > /backup/scripts/status
 }
 
 function savevms

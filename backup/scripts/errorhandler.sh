@@ -5,10 +5,10 @@ current_date=$(date +"%Y%m%d-%H%M%S")
 statusfile="/backup/scripts/status"
 status=$(cat "$statusfile")
 stamp=$(date +"%Y%m%d")
-sender="sauvegardes@isc-group.fr"
-recipients="sauvegardes@isc-group.fr"
-site="IFF-02"
-sujet="TEST"
+sender=""
+recipients=""
+site=""
+sujet=""
 
 #echo $status
 #echo "${stamp}0"

@@ -15,6 +15,9 @@ apt-get install dos2unix ansible qemu qemu-kvm bridge-utils cpu-checker libvirt-
 apt-get install -t jammy-backports cockpit -y
 apt-get install -t jammy-backports cockpit-machines -y
 apt-get install -t jammy-backports cockpit-pcp -y
+apt-get install -t noble-backports cockpit -y
+apt-get install -t noble-backports cockpit-machines -y
+apt-get install -t noble-backports cockpit-pcp -y
 #apt-get install -t noble-backports cockpit
 mkdir /usr/local/share/cockpit
 mkdir /usr/local/share/cockpit/cockpit-files

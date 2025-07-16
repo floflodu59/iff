@@ -16,7 +16,7 @@ dbcfg=$(dialog --ok-label "Continuer" \
 2>&1 1>&3)
 exec 3>&-
 IFS=$'\n'; dbcfgarray=($dbcfg); unset IFS;
-bckpassword=${bckcfgarray[0]}
+bckpassword=${dbcfgarray[0]}
 echo $bckpassword > /backup/scripts/.psswd2
 chown root:root /backup/scripts/.psswd
 chown root:root /backup/scripts/.psswd2

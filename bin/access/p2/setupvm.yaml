@@ -40,6 +40,14 @@
       ansible.builtin.reboot:
         reboot_timeout: 120
 
+    - name: Install upgrades
+      ansible.builtin.command:
+        cmd: apt --fix-broken install -y
+
+    - name: Install upgrades
+      ansible.builtin.command:
+        cmd: apt upgrade -y
+
     - name: Upgrade to newest
       ansible.builtin.command:
         cmd: do-release-upgrade -f DistUpgradeViewNonInteractive

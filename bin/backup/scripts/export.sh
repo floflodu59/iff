@@ -272,6 +272,7 @@ function errorhandler
 	echo $uploadcheck > /backup/scripts/uploadcheck
 	echo $vmcheck > /backup/scripts/vmcheck
 	echo $uploadpartial > /backup/scripts/uploadpartial
+	/backup/scripts/errorhandler.sh
 }
 
 

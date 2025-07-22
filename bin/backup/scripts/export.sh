@@ -87,6 +87,7 @@ function savedb
 				mkdir /backup/data/sql/$current_year/$current_month/$current_day
 				rm -rf /backup/data/sql/$last_year/$current_month/$current_day
 				cp /backup/temp/sqllatest.sql.gpg /backup/data/sql/$current_year/$current_month/$current_day/export-$current_date.sql.gpg
+				cp /backup/temp/sqllatest.sql.gpg /backup/data/sql/latest.sql.gpg
 			fi
 			if [[ $i == "remote" ]]; then
 				mkdir /backup/remotedata/sql/$current_year
@@ -94,6 +95,7 @@ function savedb
 				mkdir /backup/remotedata/sql/$current_year/$current_month/$current_day
 				rm -rf /backup/remotedata/sql/$last_year/$current_month/$current_day
 				cp /backup/temp/sqllatest.sql.gpg /backup/remotedata/sql/$current_year/$current_month/$current_day/export-$current_date.sql.gpg
+				cp /backup/temp/sqllatest.sql.gpg /backup/remotedata/sql/latest.sql.gpg
 			fi
 		done
 	refreshdate

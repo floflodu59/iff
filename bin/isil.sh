@@ -69,7 +69,7 @@ if [ $status -eq 1 ] ; then
 	echo $guestram > /srv/iff/tmp/isilram
 	echo $guestlocation > /srv/iff/tmp/isillocation
 	dividedram=$guestram*0.75
-	sed -i 's/-Xmx¤g/-Xmx'$dividedram'g/g' /srv/iff/bin/isil/p1/setupnetwork.sh
+	sed -i 's/-Xmx¤g/-Xmx'$dividedram'g/g' /srv/iff/bin/isil/p1/append.sh
 fi
 if [ $status -eq 255 ] ; then
 	exit 255

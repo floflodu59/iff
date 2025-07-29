@@ -29,6 +29,9 @@ function networkconfig {
 networkconfig
 if [ $status -eq 1 ] ; then
 	networkconfig
+	echo $ipaddress > /srv/iff/tmp/isilip
+	echo $gatewayaddress > /srv/iff/tmp/isilgw
+	echo $masklength > /srv/iff/tmp/isilmask
 fi
 if [ $status -eq 255 ] ; then
 	exit 255
@@ -62,6 +65,11 @@ function vmhardcconfig {
 vmhardcconfig
 if [ $status -eq 1 ] ; then
 	vmhardcconfig
+	echo $guestsize > /srv/iff/tmp/isilsize
+	echo $guestram > /srv/iff/tmp/isilram
+	echo $guestlocation > /srv/iff/tmp/isillocation
+	dividedram=$guestram*0.75
+	sed -i 's/-Xmx¤g/-Xmx'$dividedram'g/g' /srv/iff/bin/isil/p1/setupnetwork.sh
 fi
 if [ $status -eq 255 ] ; then
 	exit 255

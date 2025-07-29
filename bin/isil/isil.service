@@ -1,0 +1,15 @@
+[Unit]
+Description=ISIL Spring Boot Application
+After=network.target
+
+[Service]
+User=root
+WorkingDirectory=/var/www/html/ISIL/isils
+ExecStart=/usr/local/bin/start_isil.sh
+SuccessExitStatus=143
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
+

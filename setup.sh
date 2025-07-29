@@ -55,6 +55,10 @@ function networkconfig {
 networkconfig
 if [ $status -eq 1 ] ; then
 	networkconfig
+	echo $interface > /srv/iff/tmp/hostif
+	echo $ipaddress > /srv/iff/tmp/hostip
+	echo $gatewayaddress > /srv/iff/tmp/hostgw
+	echo $masklength > /srv/iff/tmp/hostmask
 fi
 if [ $status -eq 255 ] ; then
 	exit 255
@@ -95,14 +99,13 @@ dbcfg=$(dialog --ok-label "Continuer" \
 exec 3>&-
 IFS=$'\n'; dbcfgarray=($dbcfg); unset IFS;
 dbpassword=${dbcfgarray[0]}
-echo $dbpassword > /srv/iff/bin/backup/scripts/.psswd
+echo $dbpassword > /srv/iff/tmp/.psswd
 echo "CONFIGURATION DE LA BASE DE DONNEES"
 systemctl enable postgresql && systemctl start postgresql
 sed -i 's/local   all             postgres                                peer/local   all             postgres                                trust/g' /etc/postgresql/14/main/pg_hba.conf
 systemctl restart postgresql
 psql -U postgres -c "Alter USER postgres WITH PASSWORD '$dbpassword';"
 psql -U postgres -c "create database isil;"
-sed -i 's/local   all             postgres                                trust/local   all             postgres                                md5/g' /etc/postgresql/14/main/pg_hba.conf
 
 dialog --checklist "Choisissez ce qu'il faut installer:" 10 40 3 \
         1 "Machine virtuelle ISIL" on \

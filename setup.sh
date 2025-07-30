@@ -13,11 +13,9 @@ dialog --title "PROGRAMME D'INSTALLATION IFF" --msgbox "Ce programme permet d'in
 dialog --title "PROGRAMME D'INSTALLATION IFF" --msgbox "Le programme va maintenant installer les prérequis." 6 60
 apt-get install dos2unix ansible qemu qemu-kvm bridge-utils cpu-checker libvirt-clients libvirt-daemon postgresql cloud-image-utils ssmtp nfs-kernel-server nfs-common -y
 apt-get install -t jammy-backports cockpit -y
-apt-get install -t jammy-backports cockpit-machines -y
-apt-get install -t jammy-backports cockpit-pcp -y
 apt-get install -t noble-backports cockpit -y
-apt-get install -t noble-backports cockpit-machines -y
-apt-get install -t noble-backports cockpit-pcp -y
+apt-get install cockpit-machines -y
+apt-get install cockpit-pcp -y
 #apt-get install -t noble-backports cockpit
 mkdir /usr/local/share/cockpit
 mkdir /usr/local/share/cockpit/cockpit-files

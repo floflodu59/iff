@@ -69,7 +69,6 @@ if [ $status -eq 1 ] ; then
 	echo $guestram > /srv/iff/tmp/isilram
 	echo $guestlocation > /srv/iff/tmp/isillocation
 	dividedram=$guestram*0.75
-	sed -i 's/-Xmx¤g/-Xmx'$dividedram'g/g' /srv/iff/bin/isil/p1/append.sh
 fi
 if [ $status -eq 255 ] ; then
 	exit 255
@@ -98,7 +97,6 @@ echo 'ssh-keygen -A' >> /srv/iff/bin/isil/p1/setupnetwork.sh
 echo 'rm /etc/ssh/sshd_config.d/60-cloudimg-settings.conf' >> /srv/iff/bin/isil/p1/setupnetwork.sh
 echo 'adduser isil' >> /srv/iff/bin/isil/p1/setupnetwork.sh
 echo 'adduser isil sudo' >> /srv/iff/bin/isil/p1/setupnetwork.sh
-echo /srv/iff/bin/isil/p1/append.sh >> /srv/iff/bin/isil/p1/setupnetwork.sh
 echo 'shutdown -r' >> /srv/iff/bin/isil/p1/setupnetwork.sh
 echo "---" > /srv/iff/bin/isil/p1/roles/kvm_provision/defaults/main.yml
 echo "# defaults file for kvm_provision" >> /srv/iff/bin/isil/p1/roles/kvm_provision/defaults/main.yml

@@ -88,6 +88,11 @@ function savedb
 				rm -rf /backup/data/sql/$last_year/$current_month/$current_day
 				cp /backup/temp/sqllatest.sql.gpg /backup/data/sql/$current_year/$current_month/$current_day/export-$current_date.sql.gpg
 				cp /backup/temp/sqllatest.sql.gpg /backup/data/sql/latest.sql.gpg
+				filepath="/backup/data/sql/latest.sql.gpg"
+				if [ -n "$(find "$filepath" -prune -size +5000000c)" ]; then
+					dbcheck=true
+					echo "${current_date}-${precisetime} Votre sauvegarde de la BDD est disponible au chemin suivant : /backup/data/sql/${current_year}/${current_month}/${current_day}/export-${current_date}.sql.gpg" >> /backup/latest.log
+ 				fi
 			fi
 			if [[ $i == "remote" ]]; then
 				mkdir /backup/remotedata/sql/$current_year
@@ -96,12 +101,21 @@ function savedb
 				rm -rf /backup/remotedata/sql/$last_year/$current_month/$current_day
 				cp /backup/temp/sqllatest.sql.gpg /backup/remotedata/sql/$current_year/$current_month/$current_day/export-$current_date.sql.gpg
 				cp /backup/temp/sqllatest.sql.gpg /backup/remotedata/sql/latest.sql.gpg
+				filepath="/backup/remotedata/sql/latest.sql.gpg"
+				if [ -n "$(find "$filepath" -prune -size +5000000c)" ]; then
+					dbcheck=true
+					echo "${current_date}-${precisetime} Votre sauvegarde de la BDD est disponible au chemin suivant : /backup/remotedata/sql/${current_year}/${current_month}/${current_day}/export-${current_date}.sql.gpg" >> /backup/latest.log
+ 				fi
 			fi
 		done
 	refreshdate
-	echo "${current_date}-${precisetime} Sauvegarde de la BDD effectuée." >> /backup/latest.log
-	echo "${current_date}-${precisetime} Votre sauvegarde de la BDD est disponible au chemin suivant : /backup/data/sql/${current_year}/${current_month}/${current_day}/export-${current_date}.sql.gpg" >> /backup/latest.log
- 	dbcheck=true
+	if [[ $dbcheck = true ]] ; then
+		echo "${current_date}-${precisetime} Sauvegarde de la BDD effectuée." >> /backup/latest.log
+	fi
+	if [[ $dbcheck = false ]] ; then
+		echo "${current_date}-${precisetime} ERREUR - La sauvegarde de la BDD est K.O." >> /backup/latest.log
+	fi
+ 	#dbcheck=true
 	#echo "${stamp}${status}" > /backup/scripts/status
 }
 
@@ -121,6 +135,11 @@ function fullsave
 				mkdir /backup/data/uploads/$current_year/$current_month/$current_day
 				cp /backup/temp/uploads.tar.gz.gpg /backup/data/uploads/$current_year/$current_month/$current_day/uploads-full-$current_date.tar.gz.gpg
 				cp /backup/temp/uploads.tar.gz.gpg /backup/data/uploads/uploads-full-latest.tar.gz.gpg
+				filepath="/backup/data/uploads/uploads-full-latest.tar.gz.gpg"
+				if [ -n "$(find "$filepath" -prune -size +5000000c)" ]; then
+					uploadcheck=true
+					echo "echo "${current_date}-${precisetime} Votre sauvegarde du dossier uploads est disponible au chemin suivant : /backup/data/uploads/${current_year}/${current_month}/${current_day}/uploads-full-${current_date}.sql.gpg" >> /backup/latest.log" >> /backup/latest.log
+ 				fi
 			fi
 			if [[ $i == "remote" ]]; then
 				mkdir /backup/remotedata/uploads/$current_year
@@ -128,14 +147,25 @@ function fullsave
 				mkdir /backup/remotedata/uploads/$current_year/$current_month/$current_day
 				cp /backup/temp/uploads.tar.gz.gpg /backup/remotedata/uploads/$current_year/$current_month/$current_day/uploads-full-$current_date.tar.gz.gpg
 				cp /backup/temp/uploads.tar.gz.gpg /backup/remotedata/uploads/uploads-full-latest.tar.gz.gpg
+				filepath="/backup/remotedata/uploads/uploads-full-latest.tar.gz.gpg"
+				if [ -n "$(find "$filepath" -prune -size +5000000c)" ]; then
+					uploadcheck=true
+					echo "echo "${current_date}-${precisetime} Votre sauvegarde du dossier uploads est disponible au chemin suivant : /backup/remotedata/uploads/${current_year}/${current_month}/${current_day}/uploads-full-${current_date}.sql.gpg" >> /backup/latest.log" >> /backup/latest.log
+ 				fi
 			fi
 		done
 	rm /backup/temp/uploads.tar.gz.gpg
 	rm /backup/temp/uploads.tar.gz
 	refreshdate
-	echo "${current_date}-${precisetime} Sauvegarde du dossier uploads effectuée." >> /backup/latest.log
-	echo "${current_date}-${precisetime} Votre sauvegarde du dossier uploads est disponible au chemin suivant : /backup/data/uploads/${current_year}/${current_month}/${current_day}/uploads-full-${current_date}.sql.gpg" >> /backup/latest.log
-	uploadcheck=true
+	if [[ $dbcheck = true ]] ; then
+		echo "${current_date}-${precisetime} Sauvegarde du dossier uploads effectuée." >> /backup/latest.log
+	fi
+	if [[ $dbcheck = false ]] ; then
+		echo "${current_date}-${precisetime} ERREUR - La sauvegarde du dossier uploads est K.O." >> /backup/latest.log
+	fi
+	#echo "${current_date}-${precisetime} Sauvegarde du dossier uploads effectuée." >> /backup/latest.log
+	
+	#uploadcheck=true
 }
 
 function saveuploads
@@ -196,23 +226,39 @@ function savevms
 					mkdir /backup/data/vm/$i
 					cp /backup/temp/latest.qcow2.gpg /backup/data/vm/$i/latest.qcow2.gpg
 					virsh dumpxml $i >> /backup/data/vm/$i/latestconfig.xml
+					filepath="/backup/temp/latest.qcow2.gpg /backup/data/vm/$i/latest.qcow2.gpg"
+					if [ -n "$(find "$filepath" -prune -size +50000000c)" ]; then
+						vmcheck=true
+						echo "${current_date}-${precisetime} La sauvegarde de ${i} est disponible au chemin suivant : /backup/data/vm/${i}/latest.qcow2.gpg avec son fichier de configuration latestconfig.xml" >> /backup/latest.log
+ 					fi
 				fi
 				if [[ $k == "remote" ]]; then
 					mkdir /backup/remotedata/vm/$i
 					cp /backup/temp/latest.qcow2.gpg /backup/remotedata/vm/$i/latest.qcow2.gpg
 					virsh dumpxml $i >> /backup/remotedata/vm/$i/latestconfig.xml
+					filepath="/backup/temp/latest.qcow2.gpg /backup/remotedata/vm/$i/latest.qcow2.gpg"
+					if [ -n "$(find "$filepath" -prune -size +50000000c)" ]; then
+						vmcheck=true
+						echo "${current_date}-${precisetime} La sauvegarde de ${i} est disponible au chemin suivant : /backup/remotedata/vm/${i}/latest.qcow2.gpg avec son fichier de configuration latestconfig.xml" >> /backup/latest.log
+ 					fi
 				fi
 			done
 			rm /backup/temp/latest.qcow2
 			rm /backup/temp/latest.qcow2.gpg
 			refreshdate
-			echo "${current_date}-${precisetime} Sauvegarde de la machine virtuelle ${i} complétée." >> /backup/latest.log
-			echo "${current_date}-${precisetime} La sauvegarde de ${i} est disponible au chemin suivant : /backup/data/vm/${i}/latest.qcow2.gpg avec son fichier de configuration latestconfig.xml" >> /backup/latest.log
+			if [[ $vmcheck = true ]] ; then
+				echo "${current_date}-${precisetime} Sauvegarde de la machine virtuelle ${i} complétée." >> /backup/latest.log
+			fi
+			if [[ $vmcheck = false ]] ; then
+				echo "${current_date}-${precisetime} ERREUR - La sauvegarde de la machine virtuelle ${i} est K.O." >> /backup/latest.log
+			fi
+			#echo "${current_date}-${precisetime} Sauvegarde de la machine virtuelle ${i} complétée." >> /backup/latest.log
+			#echo "${current_date}-${precisetime} La sauvegarde de ${i} est disponible au chemin suivant : /backup/data/vm/${i}/latest.qcow2.gpg avec son fichier de configuration latestconfig.xml" >> /backup/latest.log
 		done
   	refreshdate
 	echo "${current_date}-${precisetime} Sauvegarde des machines virtuelles complétée." >> /backup/latest.log
 	fi
- 	vmcheck=true
+ 	#vmcheck=true
 }
 
 function errorhandler

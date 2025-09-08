@@ -13,11 +13,14 @@ dbcfg=$(dialog --ok-label "Continuer" \
 		--form "Entrez la configuration de la sauvegarde :" \
 15 80 0 \
 		"Clé de cryptage des sauvegardes :"	1 1	"$bckpassword" 		1 40 20 0 \
+		"Mot de passe de la base de données :"	1 1	"$bckpassword" 		2 40 20 0 \
 2>&1 1>&3)
 exec 3>&-
 IFS=$'\n'; dbcfgarray=($dbcfg); unset IFS;
 bckpassword=${dbcfgarray[0]}
+dbpassword=${dbcfgarray[1]}
 echo $bckpassword > /backup/scripts/.psswd2
+echo $dbpassword > /backup/scripts/.psswd
 chown root:root /backup/scripts/.psswd
 chown root:root /backup/scripts/.psswd2
 chmod 700 /backup/scripts/.psswd

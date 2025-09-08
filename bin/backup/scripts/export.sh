@@ -138,7 +138,7 @@ function fullsave
 				filepath="/backup/data/uploads/uploads-full-latest.tar.gz.gpg"
 				if [ -n "$(find "$filepath" -prune -size +5000000c)" ]; then
 					uploadcheck=true
-					echo "echo "${current_date}-${precisetime} Votre sauvegarde du dossier uploads est disponible au chemin suivant : /backup/data/uploads/${current_year}/${current_month}/${current_day}/uploads-full-${current_date}.sql.gpg" >> /backup/latest.log" >> /backup/latest.log
+					echo "${current_date}-${precisetime} Votre sauvegarde du dossier uploads est disponible au chemin suivant : /backup/data/uploads/${current_year}/${current_month}/${current_day}/uploads-full-${current_date}.sql.gpg" >> /backup/latest.log
  				fi
 			fi
 			if [[ $i == "remote" ]]; then
@@ -150,7 +150,7 @@ function fullsave
 				filepath="/backup/remotedata/uploads/uploads-full-latest.tar.gz.gpg"
 				if [ -n "$(find "$filepath" -prune -size +5000000c)" ]; then
 					uploadcheck=true
-					echo "echo "${current_date}-${precisetime} Votre sauvegarde du dossier uploads est disponible au chemin suivant : /backup/remotedata/uploads/${current_year}/${current_month}/${current_day}/uploads-full-${current_date}.sql.gpg" >> /backup/latest.log" >> /backup/latest.log
+					echo "${current_date}-${precisetime} Votre sauvegarde du dossier uploads est disponible au chemin suivant : /backup/remotedata/uploads/${current_year}/${current_month}/${current_day}/uploads-full-${current_date}.sql.gpg" >> /backup/latest.log
  				fi
 			fi
 		done

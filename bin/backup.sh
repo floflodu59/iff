@@ -13,7 +13,7 @@ dbcfg=$(dialog --ok-label "Continuer" \
 		--form "Entrez la configuration de la sauvegarde :" \
 30 80 0 \
 		"Clé de cryptage des sauvegardes :"	1 1	"$bckpassword" 		1 40 20 0 \
-		"Mot de passe de la base de données :"	1 1	"$bckpassword" 		2 40 20 0 \
+		"Mot de passe de la base de données :"	2 1	"$bckpassword" 		2 40 20 0 \
 2>&1 1>&3)
 exec 3>&-
 IFS=$'\n'; dbcfgarray=($dbcfg); unset IFS;

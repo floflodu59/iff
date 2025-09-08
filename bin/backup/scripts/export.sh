@@ -91,6 +91,7 @@ function savedb
 				filepath="/backup/data/sql/latest.sql.gpg"
 				if [ -n "$(find "$filepath" -prune -size +5000000c)" ]; then
 					dbcheck=true
+					refreshdate
 					echo "${current_date}-${precisetime} Votre sauvegarde de la BDD est disponible au chemin suivant : /backup/data/sql/${current_year}/${current_month}/${current_day}/export-${current_date}.sql.gpg" >> /backup/latest.log
  				fi
 			fi
@@ -104,6 +105,7 @@ function savedb
 				filepath="/backup/remotedata/sql/latest.sql.gpg"
 				if [ -n "$(find "$filepath" -prune -size +5000000c)" ]; then
 					dbcheck=true
+					refreshdate
 					echo "${current_date}-${precisetime} Votre sauvegarde de la BDD est disponible au chemin suivant : /backup/remotedata/sql/${current_year}/${current_month}/${current_day}/export-${current_date}.sql.gpg" >> /backup/latest.log
  				fi
 			fi
@@ -138,6 +140,7 @@ function fullsave
 				filepath="/backup/data/uploads/uploads-full-latest.tar.gz.gpg"
 				if [ -n "$(find "$filepath" -prune -size +5000000c)" ]; then
 					uploadcheck=true
+					refreshdate
 					echo "${current_date}-${precisetime} Votre sauvegarde du dossier uploads est disponible au chemin suivant : /backup/data/uploads/${current_year}/${current_month}/${current_day}/uploads-full-${current_date}.sql.gpg" >> /backup/latest.log
  				fi
 			fi
@@ -150,6 +153,7 @@ function fullsave
 				filepath="/backup/remotedata/uploads/uploads-full-latest.tar.gz.gpg"
 				if [ -n "$(find "$filepath" -prune -size +5000000c)" ]; then
 					uploadcheck=true
+					refreshdate
 					echo "${current_date}-${precisetime} Votre sauvegarde du dossier uploads est disponible au chemin suivant : /backup/remotedata/uploads/${current_year}/${current_month}/${current_day}/uploads-full-${current_date}.sql.gpg" >> /backup/latest.log
  				fi
 			fi
@@ -157,10 +161,10 @@ function fullsave
 	rm /backup/temp/uploads.tar.gz.gpg
 	rm /backup/temp/uploads.tar.gz
 	refreshdate
-	if [[ $dbcheck = true ]] ; then
+	if [[ $uploadcheck = true ]] ; then
 		echo "${current_date}-${precisetime} Sauvegarde du dossier uploads effectuée." >> /backup/latest.log
 	fi
-	if [[ $dbcheck = false ]] ; then
+	if [[ $uploadcheck = false ]] ; then
 		echo "${current_date}-${precisetime} ERREUR - La sauvegarde du dossier uploads est K.O." >> /backup/latest.log
 	fi
 	#echo "${current_date}-${precisetime} Sauvegarde du dossier uploads effectuée." >> /backup/latest.log
@@ -186,19 +190,39 @@ function saveuploads
 			if [[ $i == "local" ]] ; then
 				cp /backup/temp/uploads-incremental.tar.gz.gpg /backup/data/uploads/$current_year/$current_month/$current_day/uploads-incremental-$current_date.tar.gz.gpg
 				cp /backup/temp/uploads-incremental.tar.gz.gpg /backup/data/uploads/uploads-incremental-latest.tar.gz.gpg
+				refreshdate
+				filepath="/backup/data/uploads/uploads-incremental-latest.tar.gz.gpg"
+				if [ -n "$(find "$filepath" -prune -size +5000000c)" ]; then
+					uploadpartial=true
+					uploadcheck=true
+					echo "${current_date}-${precisetime} Votre sauvegarde des uploads est disponible au chemin suivant : /backup/data/uploads/${current_year}/${current_month}/${current_day}/uploads-incremental-${current_date}.sql.gpg" >> /backup/latest.log
+ 				fi
 			fi
 			if [[ $i == "remote" ]]; then
 				cp /backup/temp/uploads-incremental.tar.gz.gpg /backup/remotedata/uploads/$current_year/$current_month/$current_day/uploads-incremental-$current_date.tar.gz.gpg
 				cp /backup/temp/uploads-incremental.tar.gz.gpg /backup/remotedata/uploads/uploads-incremental-latest.tar.gz.gpg
+				refreshdate
+				filepath="/backup/remotedata/uploads/uploads-incremental-latest.tar.gz.gpg"
+				if [ -n "$(find "$filepath" -prune -size +5000000c)" ]; then
+					uploadpartial=true
+					uploadcheck=true
+					echo "${current_date}-${precisetime} Votre sauvegarde des uploads est disponible au chemin suivant : /backup/remotedata/uploads/${current_year}/${current_month}/${current_day}/uploads-incremental-${current_date}.sql.gpg" >> /backup/latest.log
+ 				fi
 			fi
 		done
 		rm /backup/temp/uploads-incremental.tar.gz.gpg 
 		rm /backup/temp/uploads-incremental.tar.gz
 		refreshdate
-		echo "${current_date}-${precisetime} Sauvegarde des uploads effectuée." >> /backup/latest.log
-		echo "${current_date}-${precisetime} Votre sauvegarde des uploads est disponible au chemin suivant : /backup/data/uploads/${current_year}/${current_month}/${current_day}/uploads-incremental-${current_date}.sql.gpg" >> /backup/latest.log
-		uploadcheck=true
-		uploadpartial=true
+		if [[ $uploadcheck = true ]] ; then
+			echo "${current_date}-${precisetime} Sauvegarde du dossier uploads effectuée." >> /backup/latest.log
+		fi
+		if [[ $uploadcheck = false ]] ; then
+			echo "${current_date}-${precisetime} ERREUR - La sauvegarde du dossier uploads est K.O." >> /backup/latest.log
+		fi
+		#echo "${current_date}-${precisetime} Sauvegarde des uploads effectuée." >> /backup/latest.log
+		#echo "${current_date}-${precisetime} Votre sauvegarde des uploads est disponible au chemin suivant : /backup/data/uploads/${current_year}/${current_month}/${current_day}/uploads-incremental-${current_date}.sql.gpg" >> /backup/latest.log
+		#uploadcheck=true
+		#uploadpartial=true
  	fi
 	if [[ $executionmode -eq 2 ]] ; then 
 		fullsave

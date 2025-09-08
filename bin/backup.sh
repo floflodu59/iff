@@ -11,7 +11,7 @@ exec 3>&1
 dbcfg=$(dialog --ok-label "Continuer" \
 		--title "CONFIGURATION SAUVEGARDES" \
 		--form "Entrez la configuration de la sauvegarde :" \
-15 80 0 \
+30 80 0 \
 		"Clé de cryptage des sauvegardes :"	1 1	"$bckpassword" 		1 40 20 0 \
 		"Mot de passe de la base de données :"	1 1	"$bckpassword" 		2 40 20 0 \
 2>&1 1>&3)

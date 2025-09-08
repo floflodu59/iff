@@ -226,7 +226,7 @@ function savevms
 					mkdir /backup/data/vm/$i
 					cp /backup/temp/latest.qcow2.gpg /backup/data/vm/$i/latest.qcow2.gpg
 					virsh dumpxml $i >> /backup/data/vm/$i/latestconfig.xml
-					filepath="/backup/temp/latest.qcow2.gpg /backup/data/vm/$i/latest.qcow2.gpg"
+					filepath="/backup/data/vm/$i/latest.qcow2.gpg"
 					if [ -n "$(find "$filepath" -prune -size +50000000c)" ]; then
 						vmcheck=true
 						echo "${current_date}-${precisetime} La sauvegarde de ${i} est disponible au chemin suivant : /backup/data/vm/${i}/latest.qcow2.gpg avec son fichier de configuration latestconfig.xml" >> /backup/latest.log
@@ -236,7 +236,7 @@ function savevms
 					mkdir /backup/remotedata/vm/$i
 					cp /backup/temp/latest.qcow2.gpg /backup/remotedata/vm/$i/latest.qcow2.gpg
 					virsh dumpxml $i >> /backup/remotedata/vm/$i/latestconfig.xml
-					filepath="/backup/temp/latest.qcow2.gpg /backup/remotedata/vm/$i/latest.qcow2.gpg"
+					filepath="/backup/remotedata/vm/$i/latest.qcow2.gpg"
 					if [ -n "$(find "$filepath" -prune -size +50000000c)" ]; then
 						vmcheck=true
 						echo "${current_date}-${precisetime} La sauvegarde de ${i} est disponible au chemin suivant : /backup/remotedata/vm/${i}/latest.qcow2.gpg avec son fichier de configuration latestconfig.xml" >> /backup/latest.log

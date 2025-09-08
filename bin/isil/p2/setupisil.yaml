@@ -39,7 +39,7 @@
 
     - name: Install cockpit-files
       ansible.builtin.command:
-        cmd: cp /srv/iff/bin/cockpit-files/* /usr/local/share/cockpit/cockpit-files/
+        cmd: cp -r /srv/iff/bin/cockpit-files /usr/local/share/cockpit
 
     - name: Sed start_isil.sh
       ansible.builtin.command:

@@ -31,7 +31,7 @@ uploadpartial=false
 stamp=$(date +"%Y%m%d")
 #====OTHER====
 sqluserfile="/backup/scripts/conf/sqluser"
-sqluser=$(cat /backup/scripts/sqluser)
+sqluser=$(cat $sqluserfile)
 vmarrayfile="/backup/scripts/vmlist"
 vmlist=$( (cat $vmarrayfile) )
 destinationsfile="/backup/scripts/destinations"

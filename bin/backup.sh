@@ -90,7 +90,7 @@ bckcfg=$(dialog --ok-label "Continuer" \
 exec 3>&-
 IFS=$'\n'; bckarray=($bckcfg); unset IFS;
 sender=${bckarray[0]}
-recipient=${bckarray[1]}
+recipients=${bckarray[1]}
 sujet=${bckarray[2]}
 site=${bckarray[3]}
 user=${bckarray[4]}
@@ -99,10 +99,10 @@ pwd=${bckarray[5]}
 #sed -i 's/recipients=""/recipients="'$recipient'"/g' /backup/scripts/errorhandler.sh
 #sed -i 's/site="IFF-01"/site="'$site'"/g' /backup/scripts/errorhandler.sh
 #sed -i 's/sujet="ISC"/sujet="'$sujet'"/g' /backup/scripts/errorhandler.sh
-echo sender > /backup/scripts/conf/sender
-echo sujet > /backup/scripts/conf/sujet
-echo site > /backup/scripts/conf/site
-echo recipient > /backup/scripts/conf/recipient
+echo $sender > /backup/scripts/conf/sender
+echo $sujet > /backup/scripts/conf/sujet
+echo $site > /backup/scripts/conf/site
+echo $recipients > /backup/scripts/conf/recipients
 
 echo "mailhub=mail.smtp2go.com:2525" > /etc/ssmtp/ssmtp.conf
 echo "AuthUser=$user" >> /etc/ssmtp/ssmtp.conf

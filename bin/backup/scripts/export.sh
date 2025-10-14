@@ -30,7 +30,8 @@ uploadcheck=false
 uploadpartial=false
 stamp=$(date +"%Y%m%d")
 #====OTHER====
-sqluser="postgres" #Changer ici utilisateur SQL
+sqluserfile="/backup/scripts/conf/sqluser"
+sqluser=$(cat /backup/scripts/sqluser)
 vmarrayfile="/backup/scripts/vmlist"
 vmlist=$( (cat $vmarrayfile) )
 destinationsfile="/backup/scripts/destinations"
@@ -192,7 +193,7 @@ function saveuploads
 				cp /backup/temp/uploads-incremental.tar.gz.gpg /backup/data/uploads/uploads-incremental-latest.tar.gz.gpg
 				refreshdate
 				filepath="/backup/data/uploads/uploads-incremental-latest.tar.gz.gpg"
-				if [ -n "$(find "$filepath" -prune -size +5000000c)" ]; then
+				if [ -n "$(find "$filepath" -prune -size +1000000c)" ]; then
 					uploadpartial=true
 					uploadcheck=true
 					echo "${current_date}-${precisetime} Votre sauvegarde des uploads est disponible au chemin suivant : /backup/data/uploads/${current_year}/${current_month}/${current_day}/uploads-incremental-${current_date}.sql.gpg" >> /backup/latest.log
@@ -203,7 +204,7 @@ function saveuploads
 				cp /backup/temp/uploads-incremental.tar.gz.gpg /backup/remotedata/uploads/uploads-incremental-latest.tar.gz.gpg
 				refreshdate
 				filepath="/backup/remotedata/uploads/uploads-incremental-latest.tar.gz.gpg"
-				if [ -n "$(find "$filepath" -prune -size +5000000c)" ]; then
+				if [ -n "$(find "$filepath" -prune -size +1000000c)" ]; then
 					uploadpartial=true
 					uploadcheck=true
 					echo "${current_date}-${precisetime} Votre sauvegarde des uploads est disponible au chemin suivant : /backup/remotedata/uploads/${current_year}/${current_month}/${current_day}/uploads-incremental-${current_date}.sql.gpg" >> /backup/latest.log

@@ -3,13 +3,18 @@
 #====VARIABLES====
 current_date=$(date +"%Y%m%d-%H%M%S")
 statusfile="/backup/scripts/status"
+recipientsfile="/backup/scripts/conf/recipients"
+senderfile="/backup/scripts/conf/sender"
+sqluserfile="/backup/scripts/conf/sqluser"
+sujetfile="/backup/scripts/conf/sujet"
+sitefile="/backup/scripts/conf/site"
 status=$(cat "$statusfile")
 stamp=$(date +"%Y%m%d")
 precistetime=$(date +"%H:%M:%S")
-sender=""
-recipients=""
-site="IFF-01"
-sujet="ISC"
+sender=$(cat "$senderfile")
+recipients=$(cat "$recipientsfile")
+site=$(cat "$sitefile")
+sujet=$(cat "$sujetfile")
 dbcheck=$(cat /backup/scripts/dbcheck)
 uploadscheck=$(cat /backup/scripts/uploadcheck)
 uploadpartial=$(cat /backup/scripts/uploadpartial)
@@ -43,6 +48,36 @@ function insertheader
 	echo "<style>" >>/backup/scripts/sendmail
 	echo "p { margin: 0px; padding: 0px; }" >>/backup/scripts/sendmail
 	echo "</style>" >>/backup/scripts/sendmail
+}
+
+function dbcheck {
+	if [[ $dbcheck = true ]] ; then
+		echo "<p>- Sauvegarde de la base de données OK</p>" >> /backup/scripts/sendmail
+	fi
+	if [[ $dbcheck = false ]] ; then
+		echo "<p>- Sauvegarde de la base de données HS</p>" >> /backup/scripts/sendmail
+	fi
+}
+
+function uploadscheck {
+	if [[ $uploadscheck = true ]] ; then
+		echo "<p>- Sauvegarde du dossier uploads OK</p>" >> /backup/scripts/sendmail
+	fi
+	if [[ $uploadscheck = false ]] ; then
+		echo "<p>- Sauvegarde du dossier uploads HS</p>" >> /backup/scripts/sendmail
+	fi
+	if [[ $uploadpartial = true ]] ; then
+		echo "<p>- Dossier uploads sauvegardé partiellement.</p>" >> /backup/scripts/sendmail
+	fi
+}
+
+function vmcheck {
+	if [[ $vmcheck = true ]] ; then
+		echo "<p>- Sauvegarde des machines virtuelles OK</p>" >> /backup/scripts/sendmail
+	fi
+	if [[ $vmcheck = false ]] ; then
+		echo "<p>- Sauvegarde des machines virtuelles HS</p>" >> /backup/scripts/sendmail
+	fi
 }
 
 function sendmail
@@ -80,27 +115,14 @@ function sendmail
     fi
 	echo "<p></p>" >> /backup/scripts/sendmail
 	echo "<p>Voici le récapitulatif de la sauvegarde :</p>" >> /backup/scripts/sendmail
-	if [[ $dbcheck = true ]] ; then
-		echo "<p>- Sauvegarde de la base de données OK</p>" >> /backup/scripts/sendmail
-	fi
-	if [[ $dbcheck = false ]] ; then
-		echo "<p>- Sauvegarde de la base de données HS</p>" >> /backup/scripts/sendmail
-	fi
-	if [[ $uploadscheck = true ]] ; then
-		echo "<p>- Sauvegarde du dossier uploads OK</p>" >> /backup/scripts/sendmail
-	fi
-	if [[ $uploadscheck = false ]] ; then
-		echo "<p>- Sauvegarde du dossier uploads HS</p>" >> /backup/scripts/sendmail
-	fi
-	if [[ $uploadpartial = true ]] ; then
-		echo "<p>- Dossier uploads sauvegardé partiellement.</p>" >> /backup/scripts/sendmail
-	fi
-	if [[ $vmcheck = true ]] ; then
-		echo "<p>- Sauvegarde des machines virtuelles OK</p>" >> /backup/scripts/sendmail
-	fi
-	if [[ $vmcheck = false ]] ; then
-		echo "<p>- Sauvegarde des machines virtuelles HS</p>" >> /backup/scripts/sendmail
-	fi
+	dbcheck
+	if [[ $status -eq "${stamp}1" ]] ; then
+		uploadscheck
+    fi
+    if [[ $status -eq "${stamp}2" ]] ; then
+		uploadscheck
+		vmcheck
+    fi
 	echo "</br><small><small><small>" >> /backup/scripts/sendmail
 	latestlog=$(cat /backup/latest.log)
 	IFS=$'\n'; latestarray=($latestlog); unset IFS;
@@ -118,7 +140,6 @@ function sendmail
     #rm /backup/scripts/sendmail
     echo "${current_date} - Envoi du mail effectue." >> /backup/latest.log
 }
-
 
 function errorhandler
 {

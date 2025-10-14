@@ -4,9 +4,12 @@ mkdir /backup
 cp -r /srv/iff/bin/backup/* /backup/
 dos2unix /backup/scripts/export.sh
 dos2unix /backup/scripts/errorhandler.sh
+dos2unix /backup/scripts/update.sh
 chmod u+x /backup/scripts/export.sh
 chmod u+x /backup/scripts/errorhandler.sh
+chmod u+x /backup/scripts/update.sh
 bckpassword=""
+dbuser="postgres"
 dbpassword=""
 exec 3>&1
 dbcfg=$(dialog --ok-label "Continuer" \
@@ -14,14 +17,17 @@ dbcfg=$(dialog --ok-label "Continuer" \
 		--form "Entrez la configuration de la sauvegarde :" \
 30 80 0 \
 		"Clé de cryptage des sauvegardes :"	1 1	"$bckpassword" 		1 40 20 256 \
-		"Mot de passe de la base de données :"	2 1	"$dbpassword" 		2 40 20 256 \
+		"Utilisateur de passe de la base de données :"	2 1	"$dbuser" 		2 40 20 256 \
+		"Mot de passe de la base de données :"	3 1	"$dbpassword" 		3 40 20 256 \
 2>&1 1>&3)
 exec 3>&-
 IFS=$'\n'; dbcfgarray=($dbcfg); unset IFS;
 bckpassword=${dbcfgarray[0]}
-dbpassword=${dbcfgarray[1]}
+dbuser=${dbcfgarray[1]}
+dbpassword=${dbcfgarray[2]}
 echo $bckpassword > /backup/scripts/.psswd2
 echo $dbpassword > /backup/scripts/.psswd
+echo $dbuser > /backup/scripts/conf/sqluser
 chown root:root /backup/scripts/.psswd
 chown root:root /backup/scripts/.psswd2
 chmod 700 /backup/scripts/.psswd
@@ -89,10 +95,15 @@ sujet=${bckarray[2]}
 site=${bckarray[3]}
 user=${bckarray[4]}
 pwd=${bckarray[5]}
-sed -i 's/sender=""/sender="'$sender'"/g' /backup/scripts/errorhandler.sh
-sed -i 's/recipients=""/recipients="'$recipient'"/g' /backup/scripts/errorhandler.sh
-sed -i 's/site="IFF-01"/site="'$site'"/g' /backup/scripts/errorhandler.sh
-sed -i 's/sujet="ISC"/sujet="'$sujet'"/g' /backup/scripts/errorhandler.sh
+#sed -i 's/sender=""/sender="'$sender'"/g' /backup/scripts/errorhandler.sh
+#sed -i 's/recipients=""/recipients="'$recipient'"/g' /backup/scripts/errorhandler.sh
+#sed -i 's/site="IFF-01"/site="'$site'"/g' /backup/scripts/errorhandler.sh
+#sed -i 's/sujet="ISC"/sujet="'$sujet'"/g' /backup/scripts/errorhandler.sh
+echo sender > /backup/scripts/conf/sender
+echo sujet > /backup/scripts/conf/sujet
+echo site > /backup/scripts/conf/site
+echo recipient > /backup/scripts/conf/recipient
+
 echo "mailhub=mail.smtp2go.com:2525" > /etc/ssmtp/ssmtp.conf
 echo "AuthUser=$user" >> /etc/ssmtp/ssmtp.conf
 echo "AuthPass=$pwd" >> /etc/ssmtp/ssmtp.conf

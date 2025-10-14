@@ -8,3 +8,5 @@ function update
 	cp /backup/temp/iff/bin/backup/scripts/update.sh /backup/scripts/update.sh
 	rm -rf /backup/temp/iff
 }
+
+update

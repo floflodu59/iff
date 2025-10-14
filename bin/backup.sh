@@ -110,4 +110,3 @@ echo "AuthPass=$pwd" >> /etc/ssmtp/ssmtp.conf
 echo "UseSTARTTLS=YES" >> /etc/ssmtp/ssmtp.conf
 echo "FromLineOverride=YES" >> /etc/ssmtp/ssmtp.conf
 echo "VMISIL" >> /backup/scripts/vmlist
-rm /backup/scripts/.psswd

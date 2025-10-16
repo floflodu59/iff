@@ -137,7 +137,7 @@ function sendmail
 	echo "</br></small></small></small>" >> /backup/scripts/sendmail
 	refreshdate
 	echo "<p>Bonne journee,</p>" >> /backup/scripts/sendmail
-    echo "<p>SFF 1.0</p>" >> /backup/scripts/sendmail
+    echo "<p>SFF 2.0</p>" >> /backup/scripts/sendmail
     /usr/sbin/ssmtp $recipients < /backup/scripts/sendmail
     #rm /backup/scripts/sendmail
     echo "${current_date} - Envoi du mail effectue." >> /backup/latest.log

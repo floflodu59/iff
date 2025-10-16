@@ -118,10 +118,10 @@ function sendmail
 	echo "<p></p>" >> /backup/scripts/sendmail
 	echo "<p>Voici le récapitulatif de la sauvegarde :</p>" >> /backup/scripts/sendmail
 	dbcheck
-	if [[ $executionmode -eq "$1" ]] ; then
+	if [[ $executionmode -eq "1" ]] ; then
 		uploadscheck
     fi
-    if [[ $executionmode -eq "$2" ]] ; then
+    if [[ $executionmode -eq "2" ]] ; then
 		uploadscheck
 		vmcheck
     fi

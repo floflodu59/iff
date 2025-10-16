@@ -90,7 +90,7 @@ function savedb
 				cp /backup/temp/sqllatest.sql.gpg /backup/data/sql/$current_year/$current_month/$current_day/export-$current_date.sql.gpg
 				cp /backup/temp/sqllatest.sql.gpg /backup/data/sql/latest.sql.gpg
 				filepath="/backup/data/sql/latest.sql.gpg"
-				if [ -n "$(find "$filepath" -prune -size +5000000c)" ]; then
+				if [ -n "$(find "$filepath" -prune -size +1000000c)" ]; then
 					dbcheck=true
 					refreshdate
 					echo "${current_date}-${precisetime} Votre sauvegarde de la BDD est disponible au chemin suivant : /backup/data/sql/${current_year}/${current_month}/${current_day}/export-${current_date}.sql.gpg" >> /backup/latest.log
@@ -104,7 +104,7 @@ function savedb
 				cp /backup/temp/sqllatest.sql.gpg /backup/remotedata/sql/$current_year/$current_month/$current_day/export-$current_date.sql.gpg
 				cp /backup/temp/sqllatest.sql.gpg /backup/remotedata/sql/latest.sql.gpg
 				filepath="/backup/remotedata/sql/latest.sql.gpg"
-				if [ -n "$(find "$filepath" -prune -size +5000000c)" ]; then
+				if [ -n "$(find "$filepath" -prune -size +1000000c)" ]; then
 					dbcheck=true
 					refreshdate
 					echo "${current_date}-${precisetime} Votre sauvegarde de la BDD est disponible au chemin suivant : /backup/remotedata/sql/${current_year}/${current_month}/${current_day}/export-${current_date}.sql.gpg" >> /backup/latest.log
@@ -139,7 +139,7 @@ function fullsave
 				cp /backup/temp/uploads.tar.gz.gpg /backup/data/uploads/$current_year/$current_month/$current_day/uploads-full-$current_date.tar.gz.gpg
 				cp /backup/temp/uploads.tar.gz.gpg /backup/data/uploads/uploads-full-latest.tar.gz.gpg
 				filepath="/backup/data/uploads/uploads-full-latest.tar.gz.gpg"
-				if [ -n "$(find "$filepath" -prune -size +5000000c)" ]; then
+				if [ -n "$(find "$filepath" -prune -size +1000000c)" ]; then
 					uploadcheck=true
 					refreshdate
 					echo "${current_date}-${precisetime} Votre sauvegarde du dossier uploads est disponible au chemin suivant : /backup/data/uploads/${current_year}/${current_month}/${current_day}/uploads-full-${current_date}.sql.gpg" >> /backup/latest.log
@@ -152,7 +152,7 @@ function fullsave
 				cp /backup/temp/uploads.tar.gz.gpg /backup/remotedata/uploads/$current_year/$current_month/$current_day/uploads-full-$current_date.tar.gz.gpg
 				cp /backup/temp/uploads.tar.gz.gpg /backup/remotedata/uploads/uploads-full-latest.tar.gz.gpg
 				filepath="/backup/remotedata/uploads/uploads-full-latest.tar.gz.gpg"
-				if [ -n "$(find "$filepath" -prune -size +5000000c)" ]; then
+				if [ -n "$(find "$filepath" -prune -size +1000000c)" ]; then
 					uploadcheck=true
 					refreshdate
 					echo "${current_date}-${precisetime} Votre sauvegarde du dossier uploads est disponible au chemin suivant : /backup/remotedata/uploads/${current_year}/${current_month}/${current_day}/uploads-full-${current_date}.sql.gpg" >> /backup/latest.log

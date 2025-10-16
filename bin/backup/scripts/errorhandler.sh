@@ -19,6 +19,8 @@ dbcheck=$(cat /backup/scripts/dbcheck)
 uploadscheck=$(cat /backup/scripts/uploadcheck)
 uploadpartial=$(cat /backup/scripts/uploadpartial)
 vmcheck=$(cat /backup/scripts/vmcheck)
+executiontype="/backup/scripts/executiontype"
+executionmode=$(cat $executiontype)
 
 
 #echo $status
@@ -116,11 +118,10 @@ function sendmail
 	echo "<p></p>" >> /backup/scripts/sendmail
 	echo "<p>Voici le récapitulatif de la sauvegarde :</p>" >> /backup/scripts/sendmail
 	dbcheck
-	echo $status
-	if [[ $status -eq "${stamp}1" ]] ; then
+	if [[ $executionmode -eq "$1" ]] ; then
 		uploadscheck
     fi
-    if [[ $status -eq "${stamp}2" ]] ; then
+    if [[ $executionmode -eq "$2" ]] ; then
 		uploadscheck
 		vmcheck
     fi

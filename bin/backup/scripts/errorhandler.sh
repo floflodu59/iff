@@ -116,6 +116,7 @@ function sendmail
 	echo "<p></p>" >> /backup/scripts/sendmail
 	echo "<p>Voici le récapitulatif de la sauvegarde :</p>" >> /backup/scripts/sendmail
 	dbcheck
+	echo $status
 	if [[ $status -eq "${stamp}1" ]] ; then
 		uploadscheck
     fi

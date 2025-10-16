@@ -120,7 +120,6 @@ function savedb
 	fi
  	#dbcheck=true
 	#echo "${stamp}${status}" > /backup/scripts/status
-	echo "TEST"
 }
 
 function fullsave

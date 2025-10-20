@@ -189,6 +189,7 @@ function saveuploads
 		for i in "${destinationslist[@]}"
 		do
 			if [[ $i == "local" ]] ; then
+				echo "Sauvegarde locale du dossier Uploads"
 				cp /backup/temp/uploads-incremental.tar.gz.gpg /backup/data/uploads/$current_year/$current_month/$current_day/uploads-incremental-$current_date.tar.gz.gpg
 				cp /backup/temp/uploads-incremental.tar.gz.gpg /backup/data/uploads/uploads-incremental-latest.tar.gz.gpg
 				refreshdate

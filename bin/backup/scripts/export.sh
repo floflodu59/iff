@@ -179,6 +179,7 @@ function saveuploads
 	#if [[ $current_day -eq 1 ]] ; then
 	#	fullsave
 	#fi
+	echo $executionmode
 	if [[ $executionmode -eq 1 ]] ; then
 		echo "${current_date}-${precisetime} Démarrage de la sauvegarde du dossier uploads." >> /backup/latest.log
 		rm -rf /backup/temp/copy
@@ -188,6 +189,7 @@ function saveuploads
 		echo $(cat "$password2")| gpg --batch --yes --passphrase-fd 0 -c /backup/temp/uploads-incremental.tar.gz
 		for i in "${destinationslist[@]}"
 		do
+			echo $i
 			if [[ $i == "local" ]] ; then
 				echo "Sauvegarde locale du dossier Uploads"
 				cp /backup/temp/uploads-incremental.tar.gz.gpg /backup/data/uploads/$current_year/$current_month/$current_day/uploads-incremental-$current_date.tar.gz.gpg
